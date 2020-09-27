@@ -6,6 +6,7 @@
 ```
 install.packages("devtools")
 library(devtools)
+install_github("TerenceLiu4444/tensorpca")
 library(tensorpca)
 d = 3
 sigma = 0.01
