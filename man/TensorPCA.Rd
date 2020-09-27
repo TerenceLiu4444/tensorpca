@@ -24,6 +24,7 @@ Returns a list with the following attributes:
 \item{W}{W has shape (d3, decomposed_tensor_rank, power_iteration+1). The mth slice (W[,,m]) contains the eigen vectors across 3rd dimension obtaind at (m-1) iteration.}
 }
 \examples{
+library(tensorpca)
 d = 3
 sigma = 0.01
 a = c(1,0,0)
