@@ -38,7 +38,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_tensorpca_GetRank1Tensor", (DL_FUNC) &_tensorpca_GetRank1Tensor, 4},
-    {"_tensorpca_TensorPCA", (DL_FUNC) &_tensorpca_TensorPCA, 4},
+    {"_tensorpca_TensorPCA", (DL_FUNC) &_tensorpca_TensorPCA, 5},
     {NULL, NULL, 0}
 };
 
