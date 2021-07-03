@@ -5,7 +5,7 @@ GetRank1Tensor <- function(lambda, a, b, c) {
     .Call(`_tensorpca_GetRank1Tensor`, lambda, a, b, c)
 }
 
-TensorPCA <- function(X, tensor_rank, sigma, num_power_iter) {
-    .Call(`_tensorpca_TensorPCA`, X, tensor_rank, sigma, num_power_iter)
+TensorPCA <- function(X, tensor_rank, sigma, num_power_iter, use_unfolding_init=TRUE) {
+    .Call(`_tensorpca_TensorPCA`, X, tensor_rank, sigma, num_power_iter, use_unfolding_init)
 }
 
