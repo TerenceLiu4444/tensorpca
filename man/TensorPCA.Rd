@@ -15,6 +15,7 @@ TensorPCA(data_tensor, decomposed_tensor_rank, sigma, power_iteration)
 \item{decomposed_tensor_rank}{Number of factors to get from the decomposition.}
 \item{sigma}{Standard deviation of idiosyncratic noise.}
 \item{power_iteration}{Number of power iteration.}
+\item{use_unfolding_init}{Whether to use tensor unfolding as init estimation before power iteration.}
 }
 \value{
 Returns a list with the following attributes:
@@ -34,5 +35,5 @@ signal_tensor = GetRank1Tensor(1,a,b,c)
 data_tensor = signal_tensor + sigma * array(rnorm(d * d * d), c(d, d, d))
 power_iteration = 10
 decomposed_tensor_rank = 3
-res = TensorPCA(data_tensor, decomposed_tensor_rank, sigma, power_iteration)
+res = TensorPCA(data_tensor, decomposed_tensor_rank, sigma, power_iteration, use_unfolding_init=TRUE)
 }

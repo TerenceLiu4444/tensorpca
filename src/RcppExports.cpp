@@ -21,8 +21,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // TensorPCA
-Rcpp::List TensorPCA(SEXP X, int tensor_rank, double sigma, int num_power_iter);
-RcppExport SEXP _tensorpca_TensorPCA(SEXP XSEXP, SEXP tensor_rankSEXP, SEXP sigmaSEXP, SEXP num_power_iterSEXP) {
+Rcpp::List TensorPCA(SEXP X, int tensor_rank, double sigma, int num_power_iter, bool use_unfolding_init);
+RcppExport SEXP _tensorpca_TensorPCA(SEXP XSEXP, SEXP tensor_rankSEXP, SEXP sigmaSEXP, SEXP num_power_iterSEXP, SEXP use_unfolding_initSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -30,7 +30,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type tensor_rank(tensor_rankSEXP);
     Rcpp::traits::input_parameter< double >::type sigma(sigmaSEXP);
     Rcpp::traits::input_parameter< int >::type num_power_iter(num_power_iterSEXP);
-    rcpp_result_gen = Rcpp::wrap(TensorPCA(X, tensor_rank, sigma, num_power_iter));
+    Rcpp::traits::input_parameter< bool >::type use_unfolding_init(use_unfolding_initSEXP);
+    rcpp_result_gen = Rcpp::wrap(TensorPCA(X, tensor_rank, sigma, num_power_iter, use_unfolding_init));
     return rcpp_result_gen;
 END_RCPP
 }

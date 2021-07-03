@@ -18,7 +18,7 @@ signal_tensor = GetRank1Tensor(1,a,b,c)
 data_tensor = signal_tensor + sigma * array(rnorm(d * d * d), c(d, d, d))
 power_iteration = 10
 decomposed_tensor_rank = 3
-res = TensorPCA(data_tensor, decomposed_tensor_rank, sigma, power_iteration)
+res = TensorPCA(data_tensor, decomposed_tensor_rank, sigma, power_iteration, use_unfolding_init=TRUE)
 print("Eigen values of the decomposed tensor:")
 print(res$D[, power_iteration])
 
