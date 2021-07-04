@@ -1,4 +1,5 @@
 #include <RcppArmadillo.h>
+#include <iostream>
 // [[Rcpp::depends(RcppArmadillo)]]
 
 // Generates a rank-1 tensor as lambda * a \otimes b \otimes c.
@@ -177,7 +178,7 @@ Rcpp::List TensorPCA(SEXP X,
                      int tensor_rank,
                      double sigma,
                      int num_power_iter,
-                     bool use_unfolding_init) {
+                     bool use_unfolding_init=true) {
     Rcpp::NumericVector input_vector(X);
     const Rcpp::IntegerVector dims = input_vector.attr("dim");
     arma::cube input_tensor(
@@ -194,6 +195,7 @@ Rcpp::List TensorPCA(SEXP X,
     input_tensor.reshape(dims[0], dims[1] * dims[2], 1);
     arma::mat unfolded_tensor = input_tensor.slice(0);
     input_tensor.reshape(dims[0], dims[1], dims[2]);
+    arma::mat eigen_vecs_d0_init(dims[0], tensor_rank, /*fill_type=*/arma::fill::randn);
     arma::mat eigen_vecs_d1_init(dims[1], tensor_rank, /*fill_type=*/arma::fill::randn);
     arma::mat eigen_vecs_d2_init(dims[2], tensor_rank, /*fill_type=*/arma::fill::randn);
     arma::cube current_tensor(input_tensor);
@@ -212,8 +214,7 @@ Rcpp::List TensorPCA(SEXP X,
                     first_svd_left_singular_vecs,
                     first_svd_singular_vals,
                     first_svd_right_singular_vecs,
-                    unfolded_tensor, /*mode=*/"right", /*method=*/"dc");
-    
+                    unfolded_tensor, /*mode=*/"both", /*method=*/"dc");
             arma::mat second_svd_left_singular_vecs;
             arma::vec second_svd_singular_vals;
             arma::mat second_svd_right_singular_vecs;
@@ -224,10 +225,12 @@ Rcpp::List TensorPCA(SEXP X,
                     reshape(
                             arma::mat(first_svd_right_singular_vecs.col(0)),
                             dims[1], dims[2]));
-    
+            eigen_vals(r, 0) = first_svd_singular_vals(0) * second_svd_singular_vals(0);
+            eigen_vecs_d0_init.col(r) = first_svd_left_singular_vecs.col(0);
             eigen_vecs_d1_init.col(r) = second_svd_left_singular_vecs.col(0);
             eigen_vecs_d2_init.col(r) = second_svd_right_singular_vecs.col(0);
         }
+        eigen_vecs_d0.slice(0) = eigen_vecs_d0_init;
         eigen_vecs_d1.slice(0) = eigen_vecs_d1_init;
         eigen_vecs_d2.slice(0) = eigen_vecs_d2_init;
 
